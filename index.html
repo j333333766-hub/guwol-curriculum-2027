@@ -107,7 +107,7 @@ document.getElementById('subjT').innerHTML='<tr><th>교과(군)</th><th>과목</
 document.getElementById('ccT').innerHTML='<tr><th>영역</th>'+SEM.map(s=>`<th>${s}</th>`).join('')+'<th>3년 계</th></tr>'+
  D.cc.filter(c=>c.total||c.sem.some(Boolean)).map(c=>`<tr${/스포츠|감축|순증|체육대체/.test(c.name)?' class="spo"':''}><td class="l">${c.name}</td>${c.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td><b>${c.total}</b></td></tr>`).join('')+
  `<tr class="sum"><td class="l">창체 시간 (자율·진로·창체동아리·창체활용)</td>${SEM.map((_,i)=>`<td>${D.cc.filter(c=>/^자율|^진로|창체동아리|창체활용/.test(c.name.replace(/\s/g,''))).reduce((a,c)=>a+c.sem[i],0)}</td>`).join('')}<td>${ccCore}</td></tr>`+
- `<tr><td class="l g" colspan="8">기준 306시간 대비 ${ccPct>0?'+':''}${ccPct}% · 허용 범위 ±20%(245~367시간) ${ccOk?'안':'밖'} · 구성: ${ccParts.map(x=>x[0]+' '+x[1]).join(' + ')}</td></tr>`+
+ `<tr><td class="l g" colspan="8">기준 306시간 대비 ${ccPct>0?'+':''}${ccPct}% · 허용 범위 ±20%(245~367시간) ${ccOk?'안':'밖'} · 구성: ${ccParts.map(x=>x[0]+' '+x[1]).join(' + ')}${(()=>{const j=D.cc.find(c=>/^진로/.test(c.name));const d=j?j.total-j.sem.reduce((a,b)=>a+b,0):0;return d?` (진로활동 3년 계에는 1-1 자유학기로 돌린 ${d}시간 포함)`:''})()}</td></tr>`+
  `<tr class="sum"><td class="l">창체 소계 (엑셀, 교과감축·체육대체·순증 포함)</td>${D.ccsub.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.ccsub.total}</td></tr>`+
  `<tr class="sum"><td class="l">총계</td>${D.tot.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.tot.total}</td></tr>`;
 document.getElementById('cntT').innerHTML='<tr>'+SEM.map(s=>`<th>${s}</th>`).join('')+'</tr><tr>'+D.cnt.map(v=>`<td>${v??''}</td>`).join('')+'</tr>';
