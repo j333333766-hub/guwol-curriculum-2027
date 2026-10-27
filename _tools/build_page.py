@@ -32,7 +32,9 @@ for r in rows[28:36]:
     cc.append(dict(name=lab, sem=sem, total=n(r[17])))
 ccsub = rows[36]; tot = rows[37]; cnt = rows[38]
 sports = [c for c in cc if '스포츠' in c['name'] or c['name'] in ('창체 순증', '교과 감축', '체육대체')]
-data = dict(cls=cls, subj=subj, cc=cc,
+import os
+VER = sys.argv[4] if len(sys.argv) > 4 else ''
+data = dict(ver=VER, src=os.path.basename(SRC), cls=cls, subj=subj, cc=cc,
             sub=dict(sem=[n(sub[8]), n(sub[11]), n(sub[12]), n(sub[13]), n(sub[14]), n(sub[15])], base=sub[4], total=n(sub[17]), free=n(sub[23])),
             ccsub=dict(sem=[n(ccsub[8]), n(ccsub[11]), n(ccsub[12]), n(ccsub[13]), n(ccsub[14]), n(ccsub[15])], base=ccsub[4], total=n(ccsub[17])),
             tot=dict(sem=[n(tot[8]), n(tot[11]), n(tot[12]), n(tot[13]), n(tot[14]), n(tot[15])], base=tot[4], total=n(tot[17]), free=n(tot[23])),
