@@ -84,7 +84,7 @@ document.getElementById('cards').innerHTML=`
 <div class="card acc"><div class="k">3년 총 수업 시수</div><div class="v">${D.tot.total.toLocaleString()}</div><div class="s">기준 ${D.tot.base.toLocaleString()}시간</div></div>
 <div class="card"><div class="k">교과 편성</div><div class="v">${(D.sub.total).toLocaleString()}</div><div class="s">기준 ${D.sub.base.toLocaleString()} · 자유학기 활동 포함</div></div>
 <div class="card spo"><div class="k">학교스포츠클럽</div><div class="v">${spoTot}</div><div class="s">창체 활용 ${spoUse.total} + 교과 감축 ${spoCut.total}${spoAdd.total?' + 창체 순증 '+spoAdd.total:''}</div></div>
-<div class="card free"><div class="k">자유학기 활동 (1-1)</div><div class="v">${freeTot}</div><div class="s">교과 시수 조정으로 확보</div></div>`;
+<div class="card free"><div class="k">자유학기 활동 (1-1)</div><div class="v">${D.tot.free}</div><div class="s">교과 ${freeTot} + 창체(진로) ${D.tot.free-freeTot} 조정</div></div>`;
 // 스포츠클럽 막대
 const parts=[[spoUse.total,'var(--spo)','창체 활용'],[spoCut.total,'var(--acc)','교과(체육) 감축'],[spoAdd.total,'var(--free)','창체 순증']].filter(p=>p[0]);
 document.getElementById('spoBar').innerHTML=parts.map(p=>`<div style="flex:${p[0]};background:${p[1]}">${p[2]} ${p[0]}</div>`).join('');
