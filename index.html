@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2027 입학생 교육과정 편성안</title>
+<meta name="description" content="구월중학교 2027학년도 입학생 3개년 교육과정 편성표(학교스포츠클럽 반영안)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1d2330;--sub:#5b6474;--line:#e3e6eb;--head:#eef1f6;--acc:#2f6fdb;--acc-soft:#e7effc;--spo:#1f9d6b;--spo-soft:#e3f5ed;--free:#b26a00;--free-soft:#fdf1df}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171c;--card:#1c2027;--ink:#e7eaf0;--sub:#9aa3b2;--line:#2c323c;--head:#232933;--acc:#7aa7f5;--acc-soft:#22314d;--spo:#4fcf9b;--spo-soft:#183a2d;--free:#f0b25a;--free-soft:#3a2c17}}
+:root[data-theme="dark"]{--bg:#14171c;--card:#1c2027;--ink:#e7eaf0;--sub:#9aa3b2;--line:#2c323c;--head:#232933;--acc:#7aa7f5;--acc-soft:#22314d;--spo:#4fcf9b;--spo-soft:#183a2d;--free:#f0b25a;--free-soft:#3a2c17}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans KR",system-ui,sans-serif}
+main{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:24px;margin:0 0 4px}
+.lead{color:var(--sub);margin:0 0 22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card .k{color:var(--sub);font-size:13px}
+.card .v{font-size:26px;font-weight:700;line-height:1.3}
+.card .s{color:var(--sub);font-size:13px}
+.card.spo .v{color:var(--spo)} .card.free .v{color:var(--free)} .card.acc .v{color:var(--acc)}
+h2{font-size:18px;margin:30px 0 10px}
+.tw{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:860px;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--head);font-weight:500;color:var(--sub);position:sticky;top:0}
+td.l{text-align:left}
+td.g{color:var(--sub);font-size:13px}
+td.z{color:var(--line)}
+tr.sum td{font-weight:700;background:var(--head)}
+tr.spo td{background:var(--spo-soft)}
+td.free{color:var(--free);font-weight:500}
+.tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:99px;background:var(--spo-soft);color:var(--spo);margin-left:4px}
+.bar{display:flex;height:34px;border-radius:8px;overflow:hidden;margin:10px 0 6px}
+.bar div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:500}
+.legend{color:var(--sub);font-size:13px}
+.note{color:var(--sub);font-size:13px;margin-top:8px}
+ul.n{color:var(--sub);font-size:14px;padding-left:20px}
+footer{color:var(--sub);font-size:12px;margin-top:36px;border-top:1px solid var(--line);padding-top:12px}
+</style>
+</head>
+<body>
+<main>
+<h1>2027학년도 입학생 3개년 교육과정 편성안</h1>
+<p class="lead">구월중학교 · 학교스포츠클럽 반영안 (2026. 10. 21. 안) · <span id="cls"></span></p>
+
+<div class="cards" id="cards"></div>
+
+<h2>학교스포츠클럽 136시간 확보 방법</h2>
+<div class="card">
+  <div id="spoBar" class="bar"></div>
+  <div class="legend" id="spoLegend"></div>
+  <div class="tw" style="margin-top:12px;border:none"><table id="spoT" style="min-width:600px"></table></div>
+  <p class="note">교과 감축분은 체육 시수에 포함돼 편성표 교과 소계에 들어 있고, 창체 활용분은 동아리활동 시간에서 운영합니다.</p>
+</div>
+
+<h2>교과 편성 (학기별 시수)</h2>
+<div class="tw"><table id="subjT"></table></div>
+<p class="note">1학년 1학기는 자유학기입니다. 교과 시수 일부(조정)를 자유학기 활동으로 돌렸으며, 표의 1-1 칸은 조정 뒤 편성 시수입니다. ②=교과 순수 편성, ③=자유학기 활동으로 돌린 시수, ④=②+③.</p>
+
+<h2>창의적 체험활동</h2>
+<div class="tw"><table id="ccT"></table></div>
+
+<h2>학기별 이수 과목 수</h2>
+<div class="tw"><table id="cntT" style="min-width:500px"></table></div>
+
+<footer>원본: 2027학년도 입학생의 3개년 교육과정 편성표_학교스포츠클럽 반영안_261021.xlsx (‘2027학년도 입학생’ 시트) 값을 그대로 옮겼습니다. 확정 전 검토용 안이며, 최종 편성은 학교교육과정위원회 심의를 거쳐 정해집니다.</footer>
+</main>
+<script>
+const D={"cls": 11, "subj": [{"grp": "국어", "name": "국어", "base": 442, "adj": 17, "sem": [51, 68, 68, 68, 68, 68], "pure": 391, "free": 17, "total": 408, "freeparts": [17, 0, 0, 0]}, {"grp": "사회", "name": "사회", "base": 170, "adj": 17, "sem": [34, 51, 0, 0, 34, 34], "pure": 153, "free": 17, "total": 170, "freeparts": [17, 0, 0, 0]}, {"grp": "역사", "name": "역사", "base": 170, "adj": 0, "sem": [0, 0, 51, 51, 34, 34], "pure": 170, "free": 0, "total": 170, "freeparts": [0, 0, 0, 0]}, {"grp": "도덕", "name": "도덕", "base": 170, "adj": 0, "sem": [0, 0, 34, 34, 34, 34], "pure": 136, "free": 0, "total": 136, "freeparts": [0, 0, 0, 0]}, {"grp": "수학", "name": "수학", "base": 374, "adj": 0, "sem": [51, 51, 68, 68, 68, 68], "pure": 374, "free": 0, "total": 374, "freeparts": [0, 0, 0, 0]}, {"grp": "과학", "name": "과학", "base": 374, "adj": 17, "sem": [34, 51, 68, 68, 51, 51], "pure": 323, "free": 17, "total": 340, "freeparts": [0, 0, 0, 17]}, {"grp": "기술･가정", "name": "기술･가정", "base": 272, "adj": 17, "sem": [34, 51, 34, 34, 34, 34], "pure": 221, "free": 17, "total": 238, "freeparts": [17, 0, 0, 0]}, {"grp": "정보", "name": "정보", "base": 34, "adj": 0, "sem": [34, 0, 0, 0, 0, 0], "pure": 68, "free": 0, "total": 68, "freeparts": [0, 0, 0, 0]}, {"grp": "체육", "name": "체육", "base": 272, "adj": 0, "sem": [51, 68, 51, 68, 34, 51], "pure": 323, "free": 0, "total": 323, "freeparts": [0, 0, 0, 0]}, {"grp": "예술", "name": "음악", "base": 136, "adj": 0, "sem": [34, 34, 0, 0, 34, 34], "pure": 136, "free": 0, "total": 136, "freeparts": [0, 0, 0, 0]}, {"grp": "예술", "name": "미술", "base": 136, "adj": 0, "sem": [34, 34, 0, 0, 34, 34], "pure": 136, "free": 0, "total": 136, "freeparts": [0, 0, 0, 0]}, {"grp": "영어", "name": "영어", "base": 340, "adj": 17, "sem": [34, 51, 68, 68, 68, 68], "pure": 357, "free": 17, "total": 374, "freeparts": [17, 0, 0, 0]}, {"grp": "선택", "name": "한문", "base": 170, "adj": 0, "sem": [0, 0, 34, 34, 0, 0], "pure": 68, "free": 0, "total": 68, "freeparts": [0, 0, 0, 0]}, {"grp": "선택", "name": "진로와직업", "base": null, "adj": 0, "sem": [17, 17, 0, 0, 0, 0], "pure": 34, "free": 0, "total": 34, "freeparts": [0, 0, 0, 0]}, {"grp": "선택", "name": "시민과 사회참여", "base": null, "adj": 0, "sem": [0, 0, 17, 17, 0, 0], "pure": 34, "free": 0, "total": 34, "freeparts": [0, 0, 0, 0]}, {"grp": "학교자율시간", "name": "문제해결과 프로그래밍", "base": 33, "adj": 0, "sem": [0, 34, 0, 0, 0, 0], "pure": 0, "free": 0, "total": 34, "freeparts": [0, 0, 0, 0]}], "cc": [{"name": "자율·자치활동", "sem": [9, 9, 9, 9, 9, 9], "total": 54}, {"name": "진로활동", "sem": [5, 5, 5, 5, 5, 5], "total": 47}, {"name": "동아리활동 창체동아리활동", "sem": [17, 17, 17, 17, 17, 17], "total": 102}, {"name": "스포츠클럽(136) 창체활용", "sem": [0, 17, 17, 17, 17, 17], "total": 85}, {"name": "창체순증", "sem": [0, 0, 0, 0, 0, 0], "total": 0}, {"name": "교과감축", "sem": [0, 17, 0, 17, 0, 17], "total": 51}, {"name": "체육대체", "sem": [0, 0, 0, 0, 0, 0], "total": 0}], "sub": {"sem": [408, 510, 493, 510, 493, 510], "base": 3060, "total": 3009, "free": 85}, "ccsub": {"sem": [31, 65, 48, 65, 48, 65], "base": 306, "total": 339}, "tot": {"sem": [439, 575, 541, 575, 541, 575], "base": 3366, "total": 3348, "free": 102}, "cnt": [7, 6, 8, 8, 8, 8]};
+const SEM=['1-1','1-2','2-1','2-2','3-1','3-2'];
+const f=v=>v?v:'<span style="color:var(--line)">·</span>';
+document.getElementById('cls').textContent='학년별 '+D.cls+'학급 기준';
+const spoRows=D.cc.filter(c=>/스포츠|순증|감축|체육대체/.test(c.name));
+const spoUse=spoRows.find(c=>/창체활용/.test(c.name))||{total:0,sem:[0,0,0,0,0,0]};
+const spoCut=spoRows.find(c=>/교과감축|교과 감축/.test(c.name.replace(/\s/g,'')))||{total:0,sem:[0,0,0,0,0,0]};
+const spoAdd=spoRows.find(c=>/순증/.test(c.name))||{total:0,sem:[0,0,0,0,0,0]};
+const spoTot=spoUse.total+spoCut.total+spoAdd.total;
+const freeTot=D.subj.reduce((a,s)=>a+s.free,0);
+document.getElementById('cards').innerHTML=`
+<div class="card acc"><div class="k">3년 총 수업 시수</div><div class="v">${D.tot.total.toLocaleString()}</div><div class="s">기준 ${D.tot.base.toLocaleString()}시간</div></div>
+<div class="card"><div class="k">교과 편성</div><div class="v">${(D.sub.total).toLocaleString()}</div><div class="s">기준 ${D.sub.base.toLocaleString()} · 자유학기 활동 포함</div></div>
+<div class="card spo"><div class="k">학교스포츠클럽</div><div class="v">${spoTot}</div><div class="s">창체 활용 ${spoUse.total} + 교과 감축 ${spoCut.total}${spoAdd.total?' + 창체 순증 '+spoAdd.total:''}</div></div>
+<div class="card free"><div class="k">자유학기 활동 (1-1)</div><div class="v">${freeTot}</div><div class="s">교과 시수 조정으로 확보</div></div>`;
+// 스포츠클럽 막대
+const parts=[[spoUse.total,'var(--spo)','창체 활용'],[spoCut.total,'var(--acc)','교과(체육) 감축'],[spoAdd.total,'var(--free)','창체 순증']].filter(p=>p[0]);
+document.getElementById('spoBar').innerHTML=parts.map(p=>`<div style="flex:${p[0]};background:${p[1]}">${p[2]} ${p[0]}</div>`).join('');
+document.getElementById('spoLegend').textContent=`합계 ${spoTot}시간 (기준 136시간)`;
+const sr=[spoUse,spoCut,spoAdd].filter(x=>x.total);
+document.getElementById('spoT').innerHTML='<tr><th>구분</th>'+SEM.map(s=>`<th>${s}</th>`).join('')+'<th>합계</th></tr>'+
+ sr.map(x=>`<tr><td class="l">${x.name.replace(/\(136\)/,'').replace('스포츠클럽','')}</td>${x.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td><b>${x.total}</b></td></tr>`).join('')+
+ `<tr class="sum"><td class="l">학기별 합</td>${SEM.map((_,i)=>`<td>${sr.reduce((a,x)=>a+x.sem[i],0)||'·'}</td>`).join('')}<td>${spoTot}</td></tr>`;
+// 교과 표
+let prev='';
+document.getElementById('subjT').innerHTML='<tr><th>교과(군)</th><th>과목</th><th>기준①</th>'+SEM.map(s=>`<th>${s}</th>`).join('')+'<th>편성②</th><th>자유학기③</th><th>계④</th></tr>'+
+ D.subj.map(s=>{const g=s.grp===prev?'':s.grp;prev=s.grp;return `<tr${s.name==='체육'?' class="spo"':''}><td class="l g">${g}</td><td class="l">${s.name}${s.name==='체육'&&spoCut.total?'<span class="tag">스포츠 '+spoCut.total+' 포함</span>':''}</td><td>${s.base??''}</td>${s.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td>${s.pure||''}</td><td class="free">${s.free||''}</td><td><b>${s.total}</b></td></tr>`}).join('')+
+ `<tr class="sum"><td class="l" colspan="2">교과 소계</td><td>${D.sub.base}</td>${D.sub.sem.map(v=>`<td>${v}</td>`).join('')}<td></td><td class="free">${D.sub.free||''}</td><td>${D.sub.total}</td></tr>`;
+// 창체 표
+document.getElementById('ccT').innerHTML='<tr><th>영역</th>'+SEM.map(s=>`<th>${s}</th>`).join('')+'<th>3년 계</th></tr>'+
+ D.cc.filter(c=>c.total||c.sem.some(Boolean)).map(c=>`<tr${/스포츠|감축|순증/.test(c.name)?' class="spo"':''}><td class="l">${c.name}</td>${c.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td><b>${c.total}</b></td></tr>`).join('')+
+ `<tr class="sum"><td class="l">창체 소계</td>${D.ccsub.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.ccsub.total}</td></tr>`+
+ `<tr class="sum"><td class="l">총계</td>${D.tot.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.tot.total}</td></tr>`;
+document.getElementById('cntT').innerHTML='<tr>'+SEM.map(s=>`<th>${s}</th>`).join('')+'</tr><tr>'+D.cnt.map(v=>`<td>${v??''}</td>`).join('')+'</tr>';
+</script>
+</body>
+</html>
