@@ -59,7 +59,7 @@ footer{color:var(--sub);font-size:12px;margin-top:36px;border-top:1px solid var(
 
 <h2>교과 편성 (학기별 시수)</h2>
 <div class="tw"><table id="subjT"></table></div>
-<p class="note">1학년 1학기는 자유학기입니다. 교과 시수 일부(조정)를 자유학기 활동으로 돌렸으며, 표의 1-1 칸은 조정 뒤 편성 시수입니다. 체육은 엑셀의 체육 시수에서 체육대체(스포츠클럽) 시수를 따로 떼어 두 줄로 보였습니다(교과 소계는 같음). ②=교과 순수 편성, ③=자유학기 활동으로 돌린 시수, ④=②+③.</p>
+<p class="note">1학년 1학기는 자유학기입니다. 교과 시수 일부(조정)를 자유학기 활동으로 돌렸으며, 표의 1-1 칸은 조정 뒤 편성 시수입니다. 체육대체(스포츠클럽)는 체육 교과 시간으로 운영하며 체육 아래 줄에 따로 보였습니다. ②=교과 순수 편성, ③=자유학기 활동으로 돌린 시수, ④=②+③.</p>
 
 <h2>창의적 체험활동</h2>
 <div class="tw"><table id="ccT"></table></div>
@@ -78,7 +78,7 @@ const spoRows=D.cc.filter(c=>/스포츠|순증|감축|체육대체/.test(c.name)
 const spoUse=spoRows.find(c=>/창체활용/.test(c.name))||{total:0,sem:[0,0,0,0,0,0]};
 const spoCut=spoRows.find(c=>/교과감축|교과 감축/.test(c.name.replace(/\s/g,'')))||{total:0,sem:[0,0,0,0,0,0]};
 const spoAdd=spoRows.find(c=>/순증/.test(c.name))||{total:0,sem:[0,0,0,0,0,0]};
-const spoSub=spoRows.find(c=>/체육대체/.test(c.name))||{total:0,sem:[0,0,0,0,0,0]};
+const spoSub=D.spoSub||spoRows.find(c=>/체육대체/.test(c.name))||{total:0,sem:[0,0,0,0,0,0]};
 const spoTot=spoUse.total+spoCut.total+spoAdd.total+spoSub.total;
 const freeTot=D.subj.reduce((a,s)=>a+s.free,0);
 const ccPick=re=>D.cc.filter(c=>re.test(c.name.replace(/\s/g,''))).reduce((a,c)=>a+c.total,0);
@@ -101,14 +101,14 @@ document.getElementById('spoT').innerHTML='<tr><th>구분</th>'+SEM.map(s=>`<th>
 // 교과 표
 let prev='';
 document.getElementById('subjT').innerHTML='<tr><th>교과(군)</th><th>과목</th><th>기준①</th>'+SEM.map(s=>`<th>${s}</th>`).join('')+'<th>편성②</th><th>자유학기③</th><th>계④</th></tr>'+
- D.subj.flatMap(s=>s.name==='체육'&&spoSub.total?[{...s,sem:s.sem.map((v,i)=>v-spoSub.sem[i]),pure:s.pure-spoSub.total,total:s.total-spoSub.total},{grp:s.grp,name:'체육대체 (스포츠클럽)',base:'',sem:spoSub.sem,pure:spoSub.total,free:0,total:spoSub.total,spo:1}]:[s]).map(s=>{const g=s.grp===prev?'':s.grp;prev=s.grp;return `<tr${s.spo?' class="spo"':''}><td class="l g">${g}</td><td class="l">${s.name}</td><td>${s.base??''}</td>${s.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td>${s.pure||''}</td><td class="free">${s.free||''}</td><td><b>${s.total}</b></td></tr>`}).join('')+
+ D.subj.flatMap(s=>s.name==='체육'&&spoSub.total&&!D.spoSub?[{...s,sem:s.sem.map((v,i)=>v-spoSub.sem[i]),pure:s.pure-spoSub.total,total:s.total-spoSub.total},{grp:s.grp,name:'체육대체 (스포츠클럽)',base:'',sem:spoSub.sem,pure:spoSub.total,free:0,total:spoSub.total,spo:1}]:[s]).map(s=>{const g=s.grp===prev?'':s.grp;prev=s.grp;return `<tr${s.spo?' class="spo"':''}><td class="l g">${g}</td><td class="l">${s.name}</td><td>${s.base??''}</td>${s.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td>${s.pure||''}</td><td class="free">${s.free||''}</td><td><b>${s.total}</b></td></tr>`}).join('')+
  `<tr class="sum"><td class="l" colspan="2">교과 소계</td><td>${D.sub.base}</td>${D.sub.sem.map(v=>`<td>${v}</td>`).join('')}<td></td><td class="free">${D.sub.free||''}</td><td>${D.sub.total}</td></tr>`;
 // 창체 표
 document.getElementById('ccT').innerHTML='<tr><th>영역</th>'+SEM.map(s=>`<th>${s}</th>`).join('')+'<th>3년 계</th></tr>'+
  D.cc.filter(c=>c.total||c.sem.some(Boolean)).map(c=>`<tr${/스포츠|감축|순증|체육대체/.test(c.name)?' class="spo"':''}><td class="l">${c.name}</td>${c.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td><b>${c.total}</b></td></tr>`).join('')+
  `<tr class="sum"><td class="l">창체 시간 (자율·진로·창체동아리·창체활용)</td>${SEM.map((_,i)=>`<td>${D.cc.filter(c=>/^자율|^진로|창체동아리|창체활용/.test(c.name.replace(/\s/g,''))).reduce((a,c)=>a+c.sem[i],0)}</td>`).join('')}<td>${ccCore}</td></tr>`+
  `<tr><td class="l g" colspan="8">기준 306시간 대비 ${ccPct>0?'+':''}${ccPct}% · 허용 범위 ±20%(245~367시간) ${ccOk?'안':'밖'} · 구성: ${ccParts.map(x=>x[0]+' '+x[1]).join(' + ')}${(()=>{const j=D.cc.find(c=>/^진로/.test(c.name));const d=j?j.total-j.sem.reduce((a,b)=>a+b,0):0;return d?` (진로활동 3년 계에는 1-1 자유학기로 돌린 ${d}시간 포함)`:''})()}</td></tr>`+
- `<tr class="sum"><td class="l">창체 소계 (엑셀, 교과감축·체육대체·순증 포함)</td>${D.ccsub.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.ccsub.total}</td></tr>`+
+ `<tr class="sum"><td class="l">창체 소계 (교과감축 포함)</td>${D.ccsub.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.ccsub.total}</td></tr>`+
  `<tr class="sum"><td class="l">총계</td>${D.tot.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.tot.total}</td></tr>`;
 document.getElementById('cntT').innerHTML='<tr>'+SEM.map(s=>`<th>${s}</th>`).join('')+'</tr><tr>'+D.cnt.map(v=>`<td>${v??''}</td>`).join('')+'</tr>';
 </script>
