@@ -54,7 +54,7 @@ footer{color:var(--sub);font-size:12px;margin-top:36px;border-top:1px solid var(
   <div id="spoBar" class="bar"></div>
   <div class="legend" id="spoLegend"></div>
   <div class="tw" style="margin-top:12px;border:none"><table id="spoT" style="min-width:600px"></table></div>
-  <p class="note">창체 활용·창체 순증은 창의적 체험활동 시간으로, 교과 감축·체육 대체는 체육 교과 시간으로 운영합니다(엑셀의 구분 그대로).</p>
+  <p class="note">창체 활용·창체 순증은 창의적 체험활동 시간에서, 교과 감축은 교과 시수를 줄여서, 체육 대체는 체육 시간으로 운영합니다.</p>
 </div>
 
 <h2>교과 편성 (학기별 시수)</h2>
@@ -87,7 +87,7 @@ document.getElementById('cards').innerHTML=`
 <div class="card spo"><div class="k">학교스포츠클럽</div><div class="v">${spoTot}</div><div class="s">${[[spoUse.total,'창체 활용'],[spoAdd.total,'창체 순증'],[spoCut.total,'교과 감축'],[spoSub.total,'체육 대체']].filter(x=>x[0]).map(x=>x[1]+' '+x[0]).join(' + ')}</div></div>
 <div class="card free"><div class="k">자유학기 활동 (1-1)</div><div class="v">${D.tot.free}</div><div class="s">교과 ${freeTot} + 창체(진로) ${D.tot.free-freeTot} 조정</div></div>`;
 // 스포츠클럽 막대
-const parts=[[spoUse.total,'var(--spo)','창체 활용'],[spoCut.total,'var(--acc)','교과(체육) 감축'],[spoAdd.total,'var(--free)','창체 순증'],[spoSub.total,'#8a5cd6','체육 대체']].filter(p=>p[0]);
+const parts=[[spoUse.total,'var(--spo)','창체 활용'],[spoCut.total,'var(--acc)','교과 감축'],[spoAdd.total,'var(--free)','창체 순증'],[spoSub.total,'#8a5cd6','체육 대체']].filter(p=>p[0]);
 document.getElementById('spoBar').innerHTML=parts.map(p=>`<div style="flex:${p[0]};background:${p[1]}">${p[2]} ${p[0]}</div>`).join('');
 document.getElementById('spoLegend').textContent=`합계 ${spoTot}시간 (기준 136시간)`;
 const sr=[spoUse,spoAdd,spoCut,spoSub].filter(x=>x.total);
@@ -97,7 +97,7 @@ document.getElementById('spoT').innerHTML='<tr><th>구분</th>'+SEM.map(s=>`<th>
 // 교과 표
 let prev='';
 document.getElementById('subjT').innerHTML='<tr><th>교과(군)</th><th>과목</th><th>기준①</th>'+SEM.map(s=>`<th>${s}</th>`).join('')+'<th>편성②</th><th>자유학기③</th><th>계④</th></tr>'+
- D.subj.map(s=>{const g=s.grp===prev?'':s.grp;prev=s.grp;return `<tr${s.name==='체육'?' class="spo"':''}><td class="l g">${g}</td><td class="l">${s.name}${s.name==='체육'&&spoCut.total?'<span class="tag">스포츠 '+spoCut.total+' 포함</span>':''}</td><td>${s.base??''}</td>${s.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td>${s.pure||''}</td><td class="free">${s.free||''}</td><td><b>${s.total}</b></td></tr>`}).join('')+
+ D.subj.map(s=>{const g=s.grp===prev?'':s.grp;prev=s.grp;return `<tr><td class="l g">${g}</td><td class="l">${s.name}</td><td>${s.base??''}</td>${s.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td>${s.pure||''}</td><td class="free">${s.free||''}</td><td><b>${s.total}</b></td></tr>`}).join('')+
  `<tr class="sum"><td class="l" colspan="2">교과 소계</td><td>${D.sub.base}</td>${D.sub.sem.map(v=>`<td>${v}</td>`).join('')}<td></td><td class="free">${D.sub.free||''}</td><td>${D.sub.total}</td></tr>`;
 // 창체 표
 document.getElementById('ccT').innerHTML='<tr><th>영역</th>'+SEM.map(s=>`<th>${s}</th>`).join('')+'<th>3년 계</th></tr>'+
