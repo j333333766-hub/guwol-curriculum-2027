@@ -81,9 +81,13 @@ const spoAdd=spoRows.find(c=>/순증/.test(c.name))||{total:0,sem:[0,0,0,0,0,0]}
 const spoSub=spoRows.find(c=>/체육대체/.test(c.name))||{total:0,sem:[0,0,0,0,0,0]};
 const spoTot=spoUse.total+spoCut.total+spoAdd.total+spoSub.total;
 const freeTot=D.subj.reduce((a,s)=>a+s.free,0);
+const ccPick=re=>D.cc.filter(c=>re.test(c.name.replace(/\s/g,''))).reduce((a,c)=>a+c.total,0);
+const ccParts=[['자율·자치활동',ccPick(/^자율/)],['진로활동',ccPick(/^진로/)],['창체동아리활동',ccPick(/창체동아리/)],['스포츠클럽 창체활용',ccPick(/창체활용/)]];
+const ccCore=ccParts.reduce((a,x)=>a+x[1],0), ccPct=Math.round((ccCore-306)/306*1000)/10, ccOk=ccCore>=306*0.8&&ccCore<=306*1.2;
 document.getElementById('cards').innerHTML=`
 <div class="card acc"><div class="k">3년 총 수업 시수</div><div class="v">${D.tot.total.toLocaleString()}</div><div class="s">기준 ${D.tot.base.toLocaleString()}시간</div></div>
 <div class="card"><div class="k">교과 편성</div><div class="v">${(D.sub.total).toLocaleString()}</div><div class="s">기준 ${D.sub.base.toLocaleString()} · 자유학기 활동 포함</div></div>
+<div class="card ${ccOk?'acc':'free'}"><div class="k">창의적 체험활동</div><div class="v">${ccCore}</div><div class="s">기준 306 · ${ccPct>0?'+':''}${ccPct}% (허용 ±20%: 245~367) ${ccOk?'✔ 범위 안':'✖ 범위 밖'}</div></div>
 <div class="card spo"><div class="k">학교스포츠클럽</div><div class="v">${spoTot}</div><div class="s">${[[spoUse.total,'창체 활용'],[spoAdd.total,'창체 순증'],[spoCut.total,'교과 감축'],[spoSub.total,'체육 대체']].filter(x=>x[0]).map(x=>x[1]+' '+x[0]).join(' + ')}</div></div>
 <div class="card free"><div class="k">자유학기 활동 (1-1)</div><div class="v">${D.tot.free}</div><div class="s">교과 ${freeTot} + 창체(진로) ${D.tot.free-freeTot} 조정</div></div>`;
 // 스포츠클럽 막대
@@ -102,7 +106,9 @@ document.getElementById('subjT').innerHTML='<tr><th>교과(군)</th><th>과목</
 // 창체 표
 document.getElementById('ccT').innerHTML='<tr><th>영역</th>'+SEM.map(s=>`<th>${s}</th>`).join('')+'<th>3년 계</th></tr>'+
  D.cc.filter(c=>c.total||c.sem.some(Boolean)).map(c=>`<tr${/스포츠|감축|순증|체육대체/.test(c.name)?' class="spo"':''}><td class="l">${c.name}</td>${c.sem.map(v=>`<td>${f(v)}</td>`).join('')}<td><b>${c.total}</b></td></tr>`).join('')+
- `<tr class="sum"><td class="l">창체 소계</td>${D.ccsub.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.ccsub.total}</td></tr>`+
+ `<tr class="sum"><td class="l">창체 시간 (자율·진로·창체동아리·창체활용)</td>${SEM.map((_,i)=>`<td>${D.cc.filter(c=>/^자율|^진로|창체동아리|창체활용/.test(c.name.replace(/\s/g,''))).reduce((a,c)=>a+c.sem[i],0)}</td>`).join('')}<td>${ccCore}</td></tr>`+
+ `<tr><td class="l g" colspan="8">기준 306시간 대비 ${ccPct>0?'+':''}${ccPct}% · 허용 범위 ±20%(245~367시간) ${ccOk?'안':'밖'} · 구성: ${ccParts.map(x=>x[0]+' '+x[1]).join(' + ')}</td></tr>`+
+ `<tr class="sum"><td class="l">창체 소계 (엑셀, 교과감축·체육대체·순증 포함)</td>${D.ccsub.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.ccsub.total}</td></tr>`+
  `<tr class="sum"><td class="l">총계</td>${D.tot.sem.map(v=>`<td>${v}</td>`).join('')}<td>${D.tot.total}</td></tr>`;
 document.getElementById('cntT').innerHTML='<tr>'+SEM.map(s=>`<th>${s}</th>`).join('')+'</tr><tr>'+D.cnt.map(v=>`<td>${v??''}</td>`).join('')+'</tr>';
 </script>
